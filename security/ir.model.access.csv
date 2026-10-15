@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_grg_app_login_qr_wizard_system,grg.app.login.qr.wizard.system,model_grg_app_login_qr_wizard,base.group_system,1,1,1,1
+access_grg_app_login_qr_session_system,grg.app.login.qr.session.system,model_grg_app_login_qr_session,base.group_system,1,1,1,1

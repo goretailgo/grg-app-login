@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="grg_app_login_qr.QrSessionField">
+        <div class="o_grg_qr_session text-center w-100 py-2">
+            <t t-if="state.loading">
+                <i class="fa fa-spinner fa-spin fa-2x"/>
+            </t>
+            <t t-elif="state.status.state === 'pending'">
+                <img t-att-src="state.status.qr_url" alt="Login QR"
+                     style="width:300px;height:300px;max-width:100%;"/>
+                <div class="mt-2 fs-5">
+                    Expires in <b t-out="state.secondsLeft"/> s
+                </div>
+                <div class="progress mx-auto mt-1" style="height:6px;max-width:300px;">
+                    <div class="progress-bar"
+                         t-att-class="state.secondsLeft &lt;= 10 ? 'bg-danger' : 'bg-primary'"
+                         t-att-style="'width:' + progress + '%'"/>
+                </div>
+                <div class="text-muted mt-2">
+                    <i class="fa fa-circle-o-notch fa-spin me-1"/>
+                    Waiting for <b t-out="state.status.user_login"/> to scan with the GoRetailGo app…
+                </div>
+            </t>
+            <t t-elif="state.status.state === 'scanned'">
+                <div class="alert alert-success mb-0" role="status">
+                    <i class="fa fa-check-circle fa-3x d-block mb-2"/>
+                    <div class="fs-5 fw-bold">QR scanned — app logged in</div>
+                    <div class="mt-2">
+                        User <b t-out="state.status.user_login"/> · <t t-out="state.status.company_name"/>
+                    </div>
+                    <div>Device: <b t-out="state.status.device_name or 'Unknown'"/></div>
+                    <div t-if="state.status.scanned_ip">IP: <t t-out="state.status.scanned_ip"/></div>
+                    <div>At: <t t-out="state.status.scanned_at"/></div>
+                </div>
+            </t>
+            <t t-elif="state.status.state === 'expired'">
+                <div class="alert alert-warning mb-0" role="status">
+                    <i class="fa fa-clock-o fa-3x d-block mb-2"/>
+                    <div class="fs-5 fw-bold">QR expired</div>
+                    <div>Not scanned in time. Click <b>Regenerate QR</b>.</div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="alert alert-secondary mb-0" role="status">
+                    This QR is <b t-out="state.status.state or 'unavailable'"/>.
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
